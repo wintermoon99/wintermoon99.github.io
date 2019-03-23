@@ -1,0 +1,383 @@
+<!DOCTYPE HTML>
+<html lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+    <!--Setting-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="apple-mobile-web-app-capable" content="littleStar的博客--简单有趣">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    <meta name="browsermode" content="application">
+    <meta name="screen-orientation" content="portrait">
+    <link rel="dns-prefetch" href="http://yoursite.com">
+    <!--SEO-->
+
+    <meta name="keywords" content="blog搭建">
+
+
+    <meta name="description" content="ps:本人使用的是win10操作系统，其他操作系统可能会略有不同
+简介目录一、简介
+    1.搭建博客常见的3种方案
+    2.git简介
+    3.node.js简介
+    4.hex...">
+
+
+
+<meta name="robots" content="all">
+<meta name="google" content="all">
+<meta name="googlebot" content="all">
+<meta name="verify" content="all">
+
+    <!--Title-->
+
+
+<title>利用hexo+github搭建博客 | littleStar的博客--简单有趣</title>
+
+
+    <link rel="alternate" href="/atom.xml" title="littleStar的博客--简单有趣" type="application/atom+xml">
+
+
+    <link rel="icon" href="/favicon.ico">
+
+    
+
+
+
+<link rel="stylesheet" href="/css/bootstrap.min.css?rev=3.3.7">
+<link rel="stylesheet" href="/css/font-awesome.min.css?rev=4.5.0">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash">
+
+
+
+
+    
+	<div class="hide">
+		<script type="text/javascript">
+			var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan class='cnzz_stat_icon_1263868967 hide' %3E%3Cscript%20src%3D%22https%3A%2F%2Fs95.cnzz.com%2Fz_stat.php%3Fweb_id%3D1272564536%22%3E%3C%2Fscript%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s19.cnzz.com/z_stat.php%3Fid%3D1263868967%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+		</script>
+	</div>
+
+
+
+
+
+
+    
+
+</head>
+
+</html>
+<!--[if lte IE 8]>
+<style>
+    html{ font-size: 1em }
+</style>
+<![endif]-->
+<!--[if lte IE 9]>
+<div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
+<![endif]-->
+
+<body>
+    <header class="main-header" style="background-image:url(http://snippet.shenliyang.com/img/banner.jpg)">
+    <div class="main-header-box">
+        <a class="header-avatar" href="/" title="littleStar">
+            <img src="/img/avatar.jpg" alt="logo头像" class="img-responsive center-block">
+        </a>
+        <div class="branding">
+        	<!--<h2 class="text-hide">Snippet主题,从未如此简单有趣</h2>-->
+            
+                 <img src="/img/branding.png" alt="Snippet 博客主题" class="img-responsive center-block">
+            
+    	</div>
+    </div>
+</header>
+    <nav class="main-navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="navbar-header"><span class="nav-toggle-button collapsed pull-right" data-toggle="collapse" data-target="#main-menu" id="mnav">
+                    <span class="sr-only"></span>
+                        <i class="fa fa-bars"></i>
+                    </span>
+                    <a class="navbar-brand" href="http://yoursite.com">littleStar的博客--简单有趣</a>
+                </div>
+                <div class="collapse navbar-collapse" id="main-menu">
+                    <ul class="menu">
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/"><i class="fa fa-home"></i>首页</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/基础/"><i class="fa fa-apple"></i>基础</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/渗透/"><i class="fa fa-bug"></i>渗透</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/工具/"><i class="fa fa-steam"></i>工具</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/随笔/"><i class="fa fa-book"></i>随笔</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/archives/"><i class="fa fa-calendar"></i>时间轴</a>
+                            </li>
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+    <section class="content-wrap">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="利用hexo+github搭建博客">
+            
+	            利用hexo+github搭建博客
+            
+        </h1>
+        <div class="post-meta">
+    
+        <span class="categories-meta fa-wrap">
+            <i class="fa fa-folder-open-o"></i>
+            <a class="category-link" href="/categories/工具/">工具</a>
+        </span>
+    
+
+    
+        <span class="fa-wrap">
+            <i class="fa fa-tags"></i>
+            <span class="tags-meta">
+                
+                    <a class="tag-link" href="/tags/blog搭建/">blog搭建</a>
+                
+            </span>
+        </span>
+    
+
+    
+        
+        <span class="fa-wrap">
+            <i class="fa fa-clock-o"></i>
+            <span class="date-meta">2019/03/18</span>
+        </span>
+        
+    
+</div>
+            
+            
+    </div>
+    
+    <div class="post-body post-content">
+        <p>ps:本人使用的是win10操作系统，其他操作系统可能会略有不同</p>
+<h2 id="简介目录"><a href="#简介目录" class="headerlink" title="简介目录"></a>简介目录</h2><pre><code>一、简介
+    1.搭建博客常见的3种方案
+    2.git简介
+    3.node.js简介
+    4.hexo简介
+二、搭建本地博客环境
+    1.安装node.js     
+    2.安装git      
+    3.安装hexo
+    4.本地生成博客
+    5.安装插件
+三、hexo远端部署github pages
+    1.注册github账号
+    2.创建github仓库
+    3.配置ssh
+    4.修改配置
+    5.发布
+</code></pre><h2 id="一、简介"><a href="#一、简介" class="headerlink" title="一、简介"></a>一、简介</h2><h3 id="1-搭建博客常见的3种方案"><a href="#1-搭建博客常见的3种方案" class="headerlink" title="1. 搭建博客常见的3种方案"></a>1. 搭建博客常见的3种方案</h3><pre><code>1. Github pages+hexo+markdown
+2. Github pages+jekyll+markdown
+3. vps主机+wordpress+插件
+</code></pre><p>这里我选择github+hexo+markdown方式搭建</p>
+<h3 id="2-git简介"><a href="#2-git简介" class="headerlink" title="2. git简介"></a>2. git简介</h3><p>Git 是 Linus 为了帮助管理 Linux 内核而开发的一个开源免费的版本控制工具，与CVS、SVN这些集中式的版本控制系统不同，Git是分布式版本控制系统。虽然分布式版本控制系统除了Git外，还有促使Git诞生的BitKeeper，以及类似Git的Mercurial和Bazaar等，但是最快、最简单也最流行的依然是Git！</p>
+<h3 id="3-node-js简介"><a href="#3-node-js简介" class="headerlink" title="3. node.js简介"></a>3. node.js简介</h3><p>在Netscape设计出JavaScript后不久，JavaScript已经成为了前端开发的唯一标准，此后Google基于WebKit内核推出了Chrome浏览器，并自己开发了一个高性能JavaScript引擎—V8，后来一个名叫Ryan Dahl的外国人在此基础上，于2009年推出了基于JavaScript语言和V8引擎的开源Web服务器项目，命名为Node.js。Node第一次把JavaScript带入到后端服务器开发，它让 JavaScript 成为了与PHP、Python、Perl、Ruby 等服务端语言平起平坐的脚本语言</p>
+<h3 id="4-hexo简介"><a href="#4-hexo简介" class="headerlink" title="4. hexo简介"></a>4. hexo简介</h3><p>Hexo 是一个基于Node.js的快速、简洁、高效的博客框架，Hexo 需要Node.js环境的支持，使用Markdown作为渲染引擎解析文章，结合丰富的主题，可快速生成绚丽的静态网页</p>
+<h2 id="二、搭建本地博客环境"><a href="#二、搭建本地博客环境" class="headerlink" title="二、搭建本地博客环境"></a>二、搭建本地博客环境</h2><h3 id="1-安装git"><a href="#1-安装git" class="headerlink" title="1. 安装git"></a>1. 安装git</h3><p>git官网下载地址：<a href="https://git-scm.com/download" target="_blank" rel="noopener">https://git-scm.com/download</a></p>
+<p>下载完成后按默认选项安装即可，下面链接可作参考<br>git安装教程：<a href="https://jingyan.baidu.com/article/9f7e7ec0b17cac6f2815548d.html" target="_blank" rel="noopener">https://jingyan.baidu.com/article/9f7e7ec0b17cac6f2815548d.html</a></p>
+<p>git安装成功验证：</p>
+<p><img src="https://s2.ax1x.com/2019/03/23/AJpHBQ.png" alt="image"></p>
+<h3 id="2-安装node-js"><a href="#2-安装node-js" class="headerlink" title="2. 安装node.js"></a>2. 安装node.js</h3><p>node.js官网下载地址：<a href="https://nodejs.org/en/" target="_blank" rel="noopener">https://nodejs.org/en/</a></p>
+<p>安装过程默认推荐即可，这里不作过多描述</p>
+<p>node安装成功验证，桌面空白处鼠标右键，选择git bash here，进入bash窗口</p>
+<p>输入node -v查看node版本，输入npm -v查看npm版本</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ node -v</span><br><span class="line">v10.15.3</span><br><span class="line"></span><br><span class="line">$ npm -v</span><br><span class="line">6.4.1</span><br></pre></td></tr></table></figure>
+<h3 id="3-安装hexo"><a href="#3-安装hexo" class="headerlink" title="3. 安装hexo"></a>3. 安装hexo</h3><p>在任一位置右键打开git bash 窗口，输入npm install -g hexo安装hexo，-g表示全局安装</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm install -g hexo</span><br></pre></td></tr></table></figure>
+<p>由于国内网络原因，上述命令可能安装不成功，此时我们可以使用淘宝NPM镜像，输入以下命令进行配置</p>
+<p>NPM全局配置淘宝源</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm config set registry https://registry.npm.taobao.org</span><br></pre></td></tr></table></figure>
+<p>此时可以同时全局配置user.name和user.email</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ git config --global user.name “yourname”  //yourname换成自己注册github的用户名</span><br><span class="line"></span><br><span class="line">$ git config --global user.email “youremail”  //youremail换成自己注册github的邮箱</span><br></pre></td></tr></table></figure>
+<p>配置完输入npm install hexo-cli -g全局安装hexo</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm install hexo-cli -g</span><br></pre></td></tr></table></figure>
+<p>验证是否安装成功输入hexo -v查看版本</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo -v</span><br></pre></td></tr></table></figure>
+<p><img src="https://github.com/wintermoon99/wintermoon99.github.io/raw/master/2019/03/18/hexo_github/hexo_success.png" alt="image"></p>
+<h3 id="4-本地生成博客"><a href="#4-本地生成博客" class="headerlink" title="4. 本地生成博客"></a>4. 本地生成博客</h3><p>创建一文件夹来放置hexo源文件，我在E:\创建了一个blog文件夹</p>
+<p>hexo初始化</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo init</span><br></pre></td></tr></table></figure>
+<p>完成后在blog文件夹下会出现一系列文件</p>
+<p><img src="https://github.com/wintermoon99/wintermoon99.github.io/raw/master/2019/03/18/hexo_github/localRepo.png" alt="image"><br>生成博客静态网页文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo g  //g是generate的简写</span><br></pre></td></tr></table></figure>
+<p>开启hexo服务</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo s  //s是server的简写</span><br></pre></td></tr></table></figure>
+<p><img src="https://github.com/wintermoon99/wintermoon99.github.io/raw/master/2019/03/18/hexo_github/hexo_s.png" alt="image"></p>
+<p>本地访问 <a href="http://localhost:4000/" target="_blank" rel="noopener">http://localhost:4000/</a></p>
+<p><img src="https://github.com/wintermoon99/wintermoon99.github.io/raw/master/2019/03/18/hexo_github/localBlog.png" alt="image"></p>
+<h3 id="5-安装插件"><a href="#5-安装插件" class="headerlink" title="5. 安装插件"></a>5. 安装插件</h3><p>打开 git bash 输入 npm install hexo-deployer-git –save 命令安装插件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm install hexo-deployer-git --save</span><br></pre></td></tr></table></figure>
+<h2 id="三、hexo远端部署github-pages"><a href="#三、hexo远端部署github-pages" class="headerlink" title="三、hexo远端部署github pages"></a>三、hexo远端部署github pages</h2><h3 id="1-注册github账号"><a href="#1-注册github账号" class="headerlink" title="1. 注册github账号"></a>1. 注册github账号</h3><p>github官网：<a href="https://github.com/" target="_blank" rel="noopener">https://github.com/</a><br>按要求填写个人信息即可</p>
+<h3 id="2-创建仓库"><a href="#2-创建仓库" class="headerlink" title="2. 创建仓库"></a>2. 创建仓库</h3><p>登录github，点击new repository新建仓库</p>
+<p><img src="https://github.com/wintermoon99/wintermoon99.github.io/raw/master/2019/03/18/hexo_github/newRepo.png" alt="image"></p>
+<p>repository name的格式为：yourname.github.io</p>
+<p>把yourname替换成个人github的注册名</p>
+<p>最后勾选Initialize this repository with a README,点击creat repository</p>
+<p><img src="https://github.com/wintermoon99/wintermoon99.github.io/raw/master/2019/03/18/hexo_github/creatRepo.jpg" alt="image"></p>
+<h3 id="3-配置ssh"><a href="#3-配置ssh" class="headerlink" title="3. 配置ssh"></a>3. 配置ssh</h3><p>在本地pc上生成ssh密钥，然后添加该密钥到自己的github账号上，如果本地pc下存在C:\users\pc用户名.ssh文件夹，并且.ssh文件夹下存在id_rsa.pub文件，那么可以跳过本地密钥生成步骤</p>
+<p>本地密钥生成：<br>如果本地pc无此文件，鼠标右键进入git bash窗口，输入以下命令</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ssh-keygen -t rsa -C &quot;youremail&quot;  //youremail是自己注册github的邮箱</span><br></pre></td></tr></table></figure>
+<p>连续回车3次，本地密钥生成成功,图片是以前配置时保存的，邮箱手机号打码</p>
+<p><img src="https://github.com/wintermoon99/wintermoon99.github.io/raw/master/2019/03/18/hexo_github/sshkey.png" alt="image"><br>打开C盘用户目录，找到.ssh\id_rsa.pub文件，打开并复制里面全部内容</p>
+<p>登录Github，点击setting</p>
+<p><img src="https://github.com/wintermoon99/wintermoon99.github.io/raw/master/2019/03/18/hexo_github/ssh_1.png" alt="image"><br><img src="https://github.com/wintermoon99/wintermoon99.github.io/raw/master/2019/03/18/hexo_github/ssh_2.png" alt="image"><br><img src="https://github.com/wintermoon99/wintermoon99.github.io/raw/master/2019/03/18/hexo_github/ssh_3.png" alt="image"><br>配置好后，回到git bash窗口，输入以下命令，验证github是否成功添加密钥</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ssh -T git@github.com</span><br></pre></td></tr></table></figure>
+<p><img src="https://github.com/wintermoon99/wintermoon99.github.io/raw/master/2019/03/18/hexo_github/sshT.png" alt="image"></p>
+<h3 id="4-修改配置"><a href="#4-修改配置" class="headerlink" title="4. 修改配置"></a>4. 修改配置</h3><p> 打开blog文件夹下的 _config.yml 配置文件，进行如下配置</p>
+<p>ps: 属性与值之间必须留一个空格</p>
+<p><img src="https://github.com/wintermoon99/wintermoon99.github.io/raw/master/2019/03/18/hexo_github/config.png" alt="image"></p>
+<h3 id="5-发布"><a href="#5-发布" class="headerlink" title="5. 发布"></a>5. 发布</h3><p>在blog文件夹下，右键打开git bash窗口，输入以下命令</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ hexo clean    //清楚缓存</span><br><span class="line"></span><br><span class="line">$ hexo g        //生成静态网页文件</span><br><span class="line"></span><br><span class="line">$ hexo d        //上传部署到github</span><br></pre></td></tr></table></figure>
+<p>此时打开 <a href="https://username.github.io" target="_blank" rel="noopener">https://username.github.io</a> 就可以看见已经部署好的网站了，username是自己创建仓库时的用户名</p>
+<p>我的地址是 <a href="https://wintermoon99.github.io/" target="_blank" rel="noopener">https://wintermoon99.github.io/</a> ,打开浏览器访问</p>
+<p><img src="https://github.com/wintermoon99/wintermoon99.github.io/raw/master/2019/03/18/hexo_github/deploy.png" alt="image"></p>
+<p>出现此页面，表示搭建成功！</p>
+
+    </div>
+    
+    <div class="post-footer">
+        <div>
+            
+                转载声明：商业转载请联系作者获得授权,非商业转载请注明出处 © <a href target="_blank">Snippet</a>
+            
+        </div>
+        <div>
+            
+        </div>
+    </div>
+</article>
+
+<div class="article-nav prev-next-wrap clearfix">
+    
+    
+</div>
+
+
+    <div id="comments">
+        
+	
+    <div id="vcomments" class="valine"></div>
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src="/assets/valine.min.js"></script>
+
+    <script>
+        new Valine({
+            av: AV,
+            el: '#vcomments',
+            appId: 'xOKV9J4UeQAtVkvnJC7Kq2Jn-gzGzoHsz',
+            appKey: 'erIpQac4azoCmgfBB7Dl9maa',
+            placeholder: '说点什么吧',
+            notify: false,
+            verify: false,
+            avatar: 'mm',
+            meta: 'nick,mail'.split(','),
+            pageSize: '10',
+            path: window.location.pathname,
+            lang: 'zh-Hans'.toLowerCase()
+        })
+    </script>
+
+
+    </div>
+
+
+
+
+
+                </main>
+                
+                    <aside id="article-toc" role="navigation" class="col-md-4">
+    <div class="widget">
+        <h3 class="title">Table of Contents</h3>
+        
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#简介目录"><span class="toc-text">简介目录</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#一、简介"><span class="toc-text">一、简介</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-搭建博客常见的3种方案"><span class="toc-text">1. 搭建博客常见的3种方案</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-git简介"><span class="toc-text">2. git简介</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-node-js简介"><span class="toc-text">3. node.js简介</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-hexo简介"><span class="toc-text">4. hexo简介</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#二、搭建本地博客环境"><span class="toc-text">二、搭建本地博客环境</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-安装git"><span class="toc-text">1. 安装git</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-安装node-js"><span class="toc-text">2. 安装node.js</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-安装hexo"><span class="toc-text">3. 安装hexo</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-本地生成博客"><span class="toc-text">4. 本地生成博客</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-安装插件"><span class="toc-text">5. 安装插件</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#三、hexo远端部署github-pages"><span class="toc-text">三、hexo远端部署github pages</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-注册github账号"><span class="toc-text">1. 注册github账号</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-创建仓库"><span class="toc-text">2. 创建仓库</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-配置ssh"><span class="toc-text">3. 配置ssh</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-修改配置"><span class="toc-text">4. 修改配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-发布"><span class="toc-text">5. 发布</span></a></li></ol></li></ol>
+        
+    </div>
+</aside>
+
+                
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</footer>
+
+<a id="back-to-top" class="icon-btn hide">
+	<i class="fa fa-chevron-up"></i>
+</a>
+
+
+
+
+    <div class="copyright">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="busuanzi">
+    
+</div>
+
+            </div>
+            <div class="col-sm-12">
+                <span>Copyright &copy; 2017
+                </span> |
+                <span>
+                    Powered by <a href="//hexo.io" class="copyright-links" target="_blank" rel="nofollow">Hexo</a>
+                </span> |
+                <span>
+                    Theme by <a href="//github.com/shenliyang/hexo-theme-snippet.git" class="copyright-links" target="_blank" rel="nofollow">Snippet</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+<script src="/js/app.js?rev=@@hash"></script>
+
+</body>
+</html>
