@@ -1,0 +1,352 @@
+<!DOCTYPE HTML>
+<html lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+    <!--Setting-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="apple-mobile-web-app-capable" content="littleStar的博客--简单有趣">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    <meta name="browsermode" content="application">
+    <meta name="screen-orientation" content="portrait">
+    <link rel="dns-prefetch" href="http://yoursite.com">
+    <!--SEO-->
+
+    <meta name="keywords" content="vpn">
+
+
+    <meta name="description" content="本文在虚拟机ubuntu16.10搭建了一个PPTP协议的VPN
+一、安装PPTP1、简介PPTP（Point to Point Tunneling Protocol），即点对点隧道协议
+在搭建...">
+
+
+
+<meta name="robots" content="all">
+<meta name="google" content="all">
+<meta name="googlebot" content="all">
+<meta name="verify" content="all">
+
+    <!--Title-->
+
+
+<title>ubuntu搭建VPN | littleStar的博客--简单有趣</title>
+
+
+    <link rel="alternate" href="/atom.xml" title="littleStar的博客--简单有趣" type="application/atom+xml">
+
+
+    <link rel="icon" href="/favicon.ico">
+
+    
+
+
+
+<link rel="stylesheet" href="/css/bootstrap.min.css?rev=3.3.7">
+<link rel="stylesheet" href="/css/font-awesome.min.css?rev=4.5.0">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash">
+
+
+
+
+    
+	<div class="hide">
+		<script type="text/javascript">
+			var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan class='cnzz_stat_icon_1263868967 hide' %3E%3Cscript%20src%3D%22https%3A%2F%2Fs95.cnzz.com%2Fz_stat.php%3Fweb_id%3D1272564536%22%3E%3C%2Fscript%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s19.cnzz.com/z_stat.php%3Fid%3D1263868967%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+		</script>
+	</div>
+
+
+
+
+
+
+    
+
+</head>
+
+</html>
+<!--[if lte IE 8]>
+<style>
+    html{ font-size: 1em }
+</style>
+<![endif]-->
+<!--[if lte IE 9]>
+<div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
+<![endif]-->
+
+<body>
+    <header class="main-header" style="background-image:url(http://snippet.shenliyang.com/img/banner.jpg)">
+    <div class="main-header-box">
+        <a class="header-avatar" href="/" title="littleStar">
+            <img src="/img/avatar.jpg" alt="logo头像" class="img-responsive center-block">
+        </a>
+        <div class="branding">
+        	<!--<h2 class="text-hide">Snippet主题,从未如此简单有趣</h2>-->
+            
+                 <img src="/img/branding.png" alt="Snippet 博客主题" class="img-responsive center-block">
+            
+    	</div>
+    </div>
+</header>
+    <nav class="main-navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="navbar-header"><span class="nav-toggle-button collapsed pull-right" data-toggle="collapse" data-target="#main-menu" id="mnav">
+                    <span class="sr-only"></span>
+                        <i class="fa fa-bars"></i>
+                    </span>
+                    <a class="navbar-brand" href="http://yoursite.com">littleStar的博客--简单有趣</a>
+                </div>
+                <div class="collapse navbar-collapse" id="main-menu">
+                    <ul class="menu">
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/"><i class="fa fa-home"></i>首页</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/基础/"><i class="fa fa-apple"></i>基础</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/渗透/"><i class="fa fa-bug"></i>渗透</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/工具/"><i class="fa fa-steam"></i>工具</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/随笔/"><i class="fa fa-book"></i>随笔</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/archives/"><i class="fa fa-calendar"></i>时间轴</a>
+                            </li>
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+    <section class="content-wrap">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="ubuntu搭建VPN">
+            
+	            ubuntu搭建VPN
+            
+        </h1>
+        <div class="post-meta">
+    
+        <span class="categories-meta fa-wrap">
+            <i class="fa fa-folder-open-o"></i>
+            <a class="category-link" href="/categories/工具/">工具</a>
+        </span>
+    
+
+    
+        <span class="fa-wrap">
+            <i class="fa fa-tags"></i>
+            <span class="tags-meta">
+                
+                    <a class="tag-link" href="/tags/vpn/">vpn</a>
+                
+            </span>
+        </span>
+    
+
+    
+        
+        <span class="fa-wrap">
+            <i class="fa fa-clock-o"></i>
+            <span class="date-meta">2019/04/21</span>
+        </span>
+        
+    
+</div>
+            
+            
+    </div>
+    
+    <div class="post-body post-content">
+        <p>本文在虚拟机ubuntu16.10搭建了一个PPTP协议的VPN<br><a id="more"></a></p>
+<h2 id="一、安装PPTP"><a href="#一、安装PPTP" class="headerlink" title="一、安装PPTP"></a>一、安装PPTP</h2><h3 id="1、简介"><a href="#1、简介" class="headerlink" title="1、简介"></a>1、简介</h3><pre><code>PPTP（Point to Point Tunneling Protocol），即点对点隧道协议
+</code></pre><p>在搭建VPN的时候可以使用PPTP协议，也可以使用L2TP协议，PPTP和L2TP都属于第二层隧道协议，使用PPP协议对数据进行封装，然后添加附加包头用于数据在互联网络上的传输</p>
+<h3 id="2、验证服务器是否支持MPPE模块"><a href="#2、验证服务器是否支持MPPE模块" class="headerlink" title="2、验证服务器是否支持MPPE模块"></a>2、验证服务器是否支持MPPE模块</h3><p>MPPE(Microsoft Point-To-Point Encryption, 微软点对点加密)协议在RFC3078, 3079中定义, 描述<br>了在PPP协议中进行数据加密的方法，通常用其实现PPTP模式的VPN。</p>
+<p>MPPE中的加密算法是固定的，使用RC4加密算法而不能是其他算法，<br>要使用PPTP协议搭建VPN，首先要验证服务器是否支持MPEE模块</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo modprobe ppp-compress-18 $$ echo MPEE is supported</span><br></pre></td></tr></table></figure>
+<p>如果输出：MPEE is supported，说明服务器的linux内核支持MPEE，如果不支持，请升级linux内核版本，具体如何升级内核版本这里不做赘述</p>
+<h3 id="3、安装PPTP"><a href="#3、安装PPTP" class="headerlink" title="3、安装PPTP"></a>3、安装PPTP</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt-get update</span><br><span class="line">$ sudo apt-get install  pptpd</span><br></pre></td></tr></table></figure>
+<h2 id="二、配置PPTP"><a href="#二、配置PPTP" class="headerlink" title="二、配置PPTP"></a>二、配置PPTP</h2><h3 id="1、配置网关和ip地址段"><a href="#1、配置网关和ip地址段" class="headerlink" title="1、配置网关和ip地址段"></a>1、配置网关和ip地址段</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ sudo vim /etc/pptpd.conf</span><br><span class="line"> =============================</span><br><span class="line">//打开配置文件并去掉下面对应字段的注释符号#</span><br><span class="line">localip 192.168.0.1</span><br><span class="line">remoteip 192.168.0.2-25</span><br><span class="line"> =============================</span><br></pre></td></tr></table></figure>
+<p>localip —-表示VPN的本地主机ip</p>
+<p>remoteip —-表示VPN能分配给客户的ip地址池</p>
+<p>localip和remoteip既不是外网ip也不是当前局域网ip，而是搭建的VPN会分配的ip地址，也可以不用修改</p>
+<h3 id="2、修改DNS"><a href="#2、修改DNS" class="headerlink" title="2、修改DNS"></a>2、修改DNS</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ sudo vim /etc/ppp/pptpd-options</span><br><span class="line"> =================================</span><br><span class="line"> //打开配置文件并去掉对应字段注释</span><br><span class="line"> ms-dns 10.0.0.1     //默认dns</span><br><span class="line"> ms-dns 114.114.114.114     //电信DNS</span><br><span class="line"> =================================</span><br></pre></td></tr></table></figure>
+<p>ps:原本设置了谷歌的DNS，但是客户端连接上vpn后不能上网，所以此处dns第一个是默认值，第二个加了一个电信的dns</p>
+<h3 id="3、设置用户名和密码"><a href="#3、设置用户名和密码" class="headerlink" title="3、设置用户名和密码"></a>3、设置用户名和密码</h3><p>这一步是设置客户端连接vpn时的用户名和密码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ sudo vim /etc/ppp/chap-secrets</span><br><span class="line"> =================================</span><br><span class="line"># client server secret IP addresses</span><br><span class="line">  username pptpd password *     //依次分别对应用户名、服务、密码、ip</span><br><span class="line"> =================================</span><br></pre></td></tr></table></figure>
+<p>如果不指定ip,就用*表示，如果要为每个用户分配一个固定的ip,就把ip写在密码后面，分配的ip要在刚才设置remoteip地址段内</p>
+<h3 id="4、重启服务"><a href="#4、重启服务" class="headerlink" title="4、重启服务"></a>4、重启服务</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo /etc/init.d/pptpd restart</span><br></pre></td></tr></table></figure>
+<h3 id="5、部署ip转发"><a href="#5、部署ip转发" class="headerlink" title="5、部署ip转发"></a>5、部署ip转发</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ sudo vim /etc/sysctl.conf</span><br><span class="line"> ==========================</span><br><span class="line"> //找到下面的字段去掉前面注释符#</span><br><span class="line"> net.ipv4_forward=1</span><br><span class="line"> ==========================</span><br></pre></td></tr></table></figure>
+<p>保存退出后，更新配置使刚才的修改生效</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo sysctl -p</span><br></pre></td></tr></table></figure>
+<h2 id="三、配置iptabels"><a href="#三、配置iptabels" class="headerlink" title="三、配置iptabels"></a>三、配置iptabels</h2><p>如果未安装iptables，要先安装，安装过的可以跳过</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo apt-get install iptables</span><br></pre></td></tr></table></figure>
+<p>如果iptables配置错误，可以清除iptables中的旧规则，如果是第一次配置iptables，可以跳过这一步</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ sudo iptables -F</span><br><span class="line">$ sudo iptables -X</span><br><span class="line">$ sudo iptables -t nat -F</span><br><span class="line">$ sudo iptables -t nat -X</span><br></pre></td></tr></table></figure>
+<h3 id="1、开启gre协议以及tcp1723端口和47端口"><a href="#1、开启gre协议以及tcp1723端口和47端口" class="headerlink" title="1、开启gre协议以及tcp1723端口和47端口"></a>1、开启gre协议以及tcp1723端口和47端口</h3><p>使用vpn需要gre协议，gre协议需要使用服务器的47和1723端口</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ sudo iptables -A INPUT -p gre -j ACCEPT</span><br><span class="line">$ sudo iptables -A INPUT -p tcp --dport 1723 -j ACCEPT</span><br><span class="line">$ sudo iptables -A INPUT -p tcp --dport 47 -j ACCEPT</span><br></pre></td></tr></table></figure>
+<h3 id="2、开启nat转发"><a href="#2、开启nat转发" class="headerlink" title="2、开启nat转发"></a>2、开启nat转发</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo iptables -t nat -A POSTROUTING -s 192.168.0.0/24 -o ens33 -j MASQUERADE</span><br></pre></td></tr></table></figure>
+<p><strong>注意：</strong></p>
+<p>上面命令中-s后面跟的ip要填写部署pptpd中设置的localip所在的网段，即虚拟vpn的主句ip，我的是默认192.168.0.1，192.168.0.0/24相当于192.168.0.0–192.168.0.255这个ip范围</p>
+<p>-o后面跟的是当前服务器的网卡名，如果不知道可以输入ifconfig查看，修改为对应的网卡名即可</p>
+<p>上面的命令表示：将所有从服务器上源地址为192.168.0.0–192.168.0.255之间发出的ip数据包的源地址改为服务器的ip</p>
+<h3 id="3、保存iptables规则"><a href="#3、保存iptables规则" class="headerlink" title="3、保存iptables规则"></a>3、保存iptables规则</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo iptables-save &gt; /etc/iptables-rules</span><br></pre></td></tr></table></figure>
+<p>这里遇到了一个问题，输入此命令后，返回错误提示：permission denied</p>
+<p>输入su命令切换到root用户来执行上述命令就ok了</p>
+<p><strong>打开网卡配置文件</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ sudo vim /etc/network/interfaces</span><br><span class="line"> =================================</span><br><span class="line"> //在文件末尾添加</span><br><span class="line"> pre-up iptables-restore &lt; /etc/iptables-rules</span><br><span class="line"> =================================</span><br></pre></td></tr></table></figure>
+<p><strong>重启服务</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ sudo service pptpd restart</span><br></pre></td></tr></table></figure>
+<h2 id="四、客户端配置"><a href="#四、客户端配置" class="headerlink" title="四、客户端配置"></a>四、客户端配置</h2><p>1、打开网络共享中心<br>点击设置新的连接或网络</p>
+<p><img src="https://github.com/wintermoon99/forTestIMg/raw/master/ubuntu16.10%E6%90%AD%E5%BB%BAVPN/1.png" alt="image"></p>
+<p>选择连接到工作区</p>
+<p><img src="https://github.com/wintermoon99/forTestIMg/raw/master/ubuntu16.10%E6%90%AD%E5%BB%BAVPN/2.png" alt="image"></p>
+<p>选择使用我的internet连接</p>
+<p><img src="https://github.com/wintermoon99/forTestIMg/raw/master/ubuntu16.10%E6%90%AD%E5%BB%BAVPN/3.png" alt="image"></p>
+<p>输入搭建了VPN服务器的ip地址</p>
+<p><img src="https://github.com/wintermoon99/forTestIMg/raw/master/ubuntu16.10%E6%90%AD%E5%BB%BAVPN/4.png" alt="image"></p>
+<p>输入设置的用户名和密码</p>
+<p><img src="https://github.com/wintermoon99/forTestIMg/raw/master/ubuntu16.10%E6%90%AD%E5%BB%BAVPN/5.png" alt="image"></p>
+<p>连接成功</p>
+<p><img src="https://github.com/wintermoon99/forTestIMg/raw/master/ubuntu16.10%E6%90%AD%E5%BB%BAVPN/6.png" alt="image"></p>
+
+    </div>
+    
+    <div class="post-footer">
+        <div>
+            
+                转载声明：商业转载请联系作者获得授权,非商业转载请注明出处 © <a href target="_blank">littleStar</a>
+            
+        </div>
+        <div>
+            
+        </div>
+    </div>
+</article>
+
+<div class="article-nav prev-next-wrap clearfix">
+    
+    
+        <a href="/2019/04/20/msf浏览器自动化攻击/" class="next-post btn btn-default" title="MSF搭配ettercap自动化浏览器攻击">
+            <span class="hidden-lg">下一篇</span>
+            <span class="hidden-xs">MSF搭配ettercap自动化浏览器攻击</span><i class="fa fa-angle-right fa-fw"></i>
+        </a>
+    
+</div>
+
+
+    <div id="comments">
+        
+	
+    <div id="vcomments" class="valine"></div>
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src="/assets/valine.min.js"></script>
+
+    <script>
+        new Valine({
+            av: AV,
+            el: '#vcomments',
+            appId: 'xOKV9J4UeQAtVkvnJC7Kq2Jn-gzGzoHsz',
+            appKey: 'erIpQac4azoCmgfBB7Dl9maa',
+            placeholder: '说点什么吧',
+            notify: false,
+            verify: false,
+            avatar: 'mm',
+            meta: 'nick,mail'.split(','),
+            pageSize: '10',
+            path: window.location.pathname,
+            lang: 'zh-Hans'.toLowerCase()
+        })
+    </script>
+
+
+    </div>
+
+
+
+
+
+                </main>
+                
+                    <aside id="article-toc" role="navigation" class="col-md-4">
+    <div class="widget">
+        <h3 class="title">Table of Contents</h3>
+        
+            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#一、安装PPTP"><span class="toc-text">一、安装PPTP</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1、简介"><span class="toc-text">1、简介</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2、验证服务器是否支持MPPE模块"><span class="toc-text">2、验证服务器是否支持MPPE模块</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3、安装PPTP"><span class="toc-text">3、安装PPTP</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#二、配置PPTP"><span class="toc-text">二、配置PPTP</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1、配置网关和ip地址段"><span class="toc-text">1、配置网关和ip地址段</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2、修改DNS"><span class="toc-text">2、修改DNS</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3、设置用户名和密码"><span class="toc-text">3、设置用户名和密码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4、重启服务"><span class="toc-text">4、重启服务</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5、部署ip转发"><span class="toc-text">5、部署ip转发</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#三、配置iptabels"><span class="toc-text">三、配置iptabels</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1、开启gre协议以及tcp1723端口和47端口"><span class="toc-text">1、开启gre协议以及tcp1723端口和47端口</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2、开启nat转发"><span class="toc-text">2、开启nat转发</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3、保存iptables规则"><span class="toc-text">3、保存iptables规则</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#四、客户端配置"><span class="toc-text">四、客户端配置</span></a></li></ol>
+        
+    </div>
+</aside>
+
+                
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</footer>
+
+<a id="back-to-top" class="icon-btn hide">
+	<i class="fa fa-chevron-up"></i>
+</a>
+
+
+
+
+    <div class="copyright">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="busuanzi">
+    
+</div>
+
+            </div>
+            <div class="col-sm-12">
+                <span>Copyright &copy; 2017
+                </span> |
+                <span>
+                    Powered by <a href="//hexo.io" class="copyright-links" target="_blank" rel="nofollow">Hexo</a>
+                </span> |
+                <span>
+                    Theme by <a href="//github.com/shenliyang/hexo-theme-snippet.git" class="copyright-links" target="_blank" rel="nofollow">Snippet</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+<script src="/js/app.js?rev=@@hash"></script>
+
+</body>
+</html>
