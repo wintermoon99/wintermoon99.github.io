@@ -1,0 +1,321 @@
+<!DOCTYPE HTML>
+<html lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+    <!--Setting-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta name="apple-mobile-web-app-capable" content="littleStar的博客--简单有趣">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+    <meta name="browsermode" content="application">
+    <meta name="screen-orientation" content="portrait">
+    <link rel="dns-prefetch" href="http://yoursite.com">
+    <!--SEO-->
+
+    <meta name="keywords" content="linux命令">
+
+
+    <meta name="description" content="本文整理了一些linux系统常用命令
+系统信息1234567891011arch	                显示机器的处理架构uname -m                显示机器的处理...">
+
+
+
+<meta name="robots" content="all">
+<meta name="google" content="all">
+<meta name="googlebot" content="all">
+<meta name="verify" content="all">
+
+    <!--Title-->
+
+
+<title>linux常用命令大全 | littleStar的博客--简单有趣</title>
+
+
+    <link rel="alternate" href="/atom.xml" title="littleStar的博客--简单有趣" type="application/atom+xml">
+
+
+    <link rel="icon" href="/favicon.ico">
+
+    
+
+
+
+<link rel="stylesheet" href="/css/bootstrap.min.css?rev=3.3.7">
+<link rel="stylesheet" href="/css/font-awesome.min.css?rev=4.5.0">
+<link rel="stylesheet" href="/css/style.css?rev=@@hash">
+
+
+
+
+    
+	<div class="hide">
+		<script type="text/javascript">
+			var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan class='cnzz_stat_icon_1263868967 hide' %3E%3Cscript%20src%3D%22https%3A%2F%2Fs95.cnzz.com%2Fz_stat.php%3Fweb_id%3D1272564536%22%3E%3C%2Fscript%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s19.cnzz.com/z_stat.php%3Fid%3D1263868967%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
+		</script>
+	</div>
+
+
+
+
+
+
+    
+
+</head>
+
+</html>
+<!--[if lte IE 8]>
+<style>
+    html{ font-size: 1em }
+</style>
+<![endif]-->
+<!--[if lte IE 9]>
+<div style="ie">你使用的浏览器版本过低，为了你更好的阅读体验，请更新浏览器的版本或者使用其他现代浏览器，比如Chrome、Firefox、Safari等。</div>
+<![endif]-->
+
+<body>
+    <header class="main-header" style="background-image:url(http://snippet.shenliyang.com/img/banner.jpg)">
+    <div class="main-header-box">
+        <a class="header-avatar" href="/" title="littleStar">
+            <img src="/img/avatar.jpg" alt="logo头像" class="img-responsive center-block">
+        </a>
+        <div class="branding">
+        	<!--<h2 class="text-hide">Snippet主题,从未如此简单有趣</h2>-->
+            
+                 <img src="/img/branding.png" alt="Snippet 博客主题" class="img-responsive center-block">
+            
+    	</div>
+    </div>
+</header>
+    <nav class="main-navigation">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="navbar-header"><span class="nav-toggle-button collapsed pull-right" data-toggle="collapse" data-target="#main-menu" id="mnav">
+                    <span class="sr-only"></span>
+                        <i class="fa fa-bars"></i>
+                    </span>
+                    <a class="navbar-brand" href="http://yoursite.com">littleStar的博客--简单有趣</a>
+                </div>
+                <div class="collapse navbar-collapse" id="main-menu">
+                    <ul class="menu">
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/"><i class="fa fa-home"></i>首页</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/基础/"><i class="fa fa-apple"></i>基础</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/渗透/"><i class="fa fa-bug"></i>渗透</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/工具/"><i class="fa fa-steam"></i>工具</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/categories/随笔/"><i class="fa fa-book"></i>随笔</a>
+                            </li>
+                        
+                            <li role="presentation" class="text-center">
+                                <a href="/archives/"><i class="fa fa-calendar"></i>时间轴</a>
+                            </li>
+                        
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+    <section class="content-wrap">
+        <div class="container">
+            <div class="row">
+                <main class="col-md-8 main-content m-post">
+                    <p id="process"></p>
+<article class="post">
+    <div class="post-head">
+        <h1 id="linux常用命令大全">
+            
+	            linux常用命令大全
+            
+        </h1>
+        <div class="post-meta">
+    
+        <span class="categories-meta fa-wrap">
+            <i class="fa fa-folder-open-o"></i>
+            <a class="category-link" href="/categories/基础/">基础</a>
+        </span>
+    
+
+    
+        <span class="fa-wrap">
+            <i class="fa fa-tags"></i>
+            <span class="tags-meta">
+                
+                    <a class="tag-link" href="/tags/linux命令/">linux命令</a>
+                
+            </span>
+        </span>
+    
+
+    
+        
+        <span class="fa-wrap">
+            <i class="fa fa-clock-o"></i>
+            <span class="date-meta">2019/03/20</span>
+        </span>
+        
+    
+</div>
+            
+            
+    </div>
+    
+    <div class="post-body post-content">
+        <p>本文整理了一些linux系统常用命令<br><a id="more"></a></p>
+<h3 id="系统信息"><a href="#系统信息" class="headerlink" title="系统信息"></a>系统信息</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">arch	                显示机器的处理架构</span><br><span class="line">uname -m                显示机器的处理架构</span><br><span class="line">uname -r                显示正在使用的内核版本</span><br><span class="line">cat /proc/cpuinfo       显示CPU info的信息</span><br><span class="line">cat /proc/meminfo       校验内存使用</span><br><span class="line">cat /proc/version       显示内核版本</span><br><span class="line">cat /proc/net/dev       显示网络适配器及统计</span><br><span class="line">date	                显示系统日期</span><br><span class="line">cal                     以日历表的形式显示当前日期</span><br><span class="line">df -l                   显示磁盘使用情况</span><br><span class="line">df -haT                 以易读方式列出所有文件系统及其类型</span><br></pre></td></tr></table></figure>
+<h2 id="网络"><a href="#网络" class="headerlink" title="网络"></a>网络</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">ifconfig                    查看ip</span><br><span class="line">ip addr                     查看ip</span><br><span class="line">ifconfig eth0               显示一个以太网卡的配置</span><br><span class="line">ifup eth0                   启用eth0网络设备</span><br><span class="line">ifdown eth0                 禁用</span><br><span class="line">dhclient eth0               以dhcp模式启用eth0获取ip</span><br><span class="line">netstat -ant                查看当前网络连接状态</span><br><span class="line">netstat -ntulp              查看网络连接状态(n:数字，t:tcp，u:udp,l:监听，p:进程)</span><br><span class="line">netstat -i                  显示网卡列表</span><br><span class="line">netstat -g                  显示组播组关系</span><br><span class="line">netstat -s                  显示网络统计</span><br><span class="line">netstat -r                  显示路由信息</span><br><span class="line">cat /etc/resolv.conf        查看DNS</span><br><span class="line">route -n                    查看网关</span><br></pre></td></tr></table></figure>
+<h3 id="关机"><a href="#关机" class="headerlink" title="关机"></a>关机</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">shutdown -h now                 关闭系统</span><br><span class="line">init 0	                        关闭系统</span><br><span class="line">telinit 0                       关闭系统</span><br><span class="line">shutdown -h hours:minutes       按预定时间关闭系统</span><br><span class="line">shutdown -c                     取消按预定时间关闭系统</span><br><span class="line">shutdown -r now                 重启</span><br><span class="line">reboot                          重启</span><br><span class="line">logout                          注销</span><br></pre></td></tr></table></figure>
+<h2 id="文件及目录"><a href="#文件及目录" class="headerlink" title="文件及目录"></a>文件及目录</h2><h3 id="文件操作"><a href="#文件操作" class="headerlink" title="文件操作"></a>文件操作</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">cd /home                        进入home目录</span><br><span class="line">cd ..                           返回上一级目录</span><br><span class="line">cd ../..                        返回上两级目录</span><br><span class="line">cd                              进入个人主目录</span><br><span class="line">cd -                            返回上次所在目录</span><br><span class="line">pwd                             查看当前工作路径</span><br><span class="line">pwd -P                          查看软连接的实际路径</span><br><span class="line">ls                              查看目录中文件</span><br><span class="line">ls -l                           显示文件和目录的详细资料</span><br><span class="line">ls -al                          显示所有文件和目录的详细资料</span><br><span class="line">ls -dl                          显示目录信息</span><br><span class="line">ls -r                           以文件修改时间排序显示</span><br><span class="line">ls -S                           以文件大小排序显示</span><br><span class="line">ln -s file lnk                  创建软连接(软连接可以跨文件系统，可以对目录软链接)</span><br><span class="line">ln file link                    创建硬链接(不可以给目录创建硬链接，只能在同一文件系统中创建)</span><br><span class="line">mkdirr dir                      创建目录</span><br><span class="line">mkdir dir1 dir2                 同时创建2个目录</span><br><span class="line">touch file                      创建文件</span><br><span class="line">rm file                         删除文件</span><br><span class="line">rm -rf  file                    强制删除文件或文件夹</span><br><span class="line">cp file1 file2                  复制文件</span><br><span class="line">mv file1.php file2.txt          将文件file1.php重命名为file2.txt</span><br><span class="line">mv file1 file2 /dir             将文件file1、file2移动到dir目录下</span><br><span class="line">mv * ../                        移动当前文件夹下的所有文件到上一级目录</span><br></pre></td></tr></table></figure>
+<h3 id="查看文件内容"><a href="#查看文件内容" class="headerlink" title="查看文件内容"></a>查看文件内容</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">cat file                        读取文件内容</span><br><span class="line">cat &gt;file                       创建一个文件，只能创建新文件，不能编辑已有文件</span><br><span class="line">cat file1 file2 &gt;file           将file1、file2合并为一个文件file</span><br><span class="line">more file                       以全屏的方式按页显示文件的内容，并给出已显示文件的百分比(sapce键显示下一页，b键显示上一页，q键退出)</span><br><span class="line">less file                       less与more类似，不过less前后都可以移动查看，使用方向键或鼠标滚轮</span><br><span class="line">head file                       查看文件前10行数据</span><br><span class="line">head -n 100 file                查看文件前100行数据</span><br><span class="line">tail file                       查看文件后10行数据</span><br><span class="line">tail -n 100 file                查看文件后100行数据</span><br><span class="line">du -h dir/                      以易读方式显示文件夹及子文件大小</span><br><span class="line">du -a dir/                      显示dir目录中所有文件大小</span><br><span class="line">du -ha dir/                     以易读方式显示dir文件夹内所有文件大小</span><br><span class="line">du -hc dir1/ dir2/              显示dir1、dir2文件夹内所有文件大小并统计它们的总和</span><br><span class="line">du -hc --max-depth=1 dir/       以易读方式显示dir目录下各子目录即文件夹的大小</span><br></pre></td></tr></table></figure>
+<h3 id="文件搜索"><a href="#文件搜索" class="headerlink" title="文件搜索"></a>文件搜索</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">find / -name 123.txt            从“/”即系统根目录搜索文件123.txt</span><br><span class="line">find / -user user1              搜索属于用户user1的文件和目录</span><br><span class="line">find /home/user1 -name *.bin    在目录/home/user1中搜索带有.bin结尾的文件</span><br><span class="line">locate *.ps                     寻找以.ps结尾的文件---先运行updatedb命令(使用系统内建文档数据库搜索)</span><br><span class="line">whereis ls                      查找ls程序相关文件(基于系统内建文档数据库进行搜索)</span><br><span class="line">whereis -s ls                   查找ls的源码文件</span><br><span class="line">whereis -m ls                   查找ls的帮助文件</span><br><span class="line">which                           在path即指定路径中搜索某个可执行文件位置</span><br><span class="line">echo $PATH                      查看当前PATH配置</span><br><span class="line">env                             查看所有环境变量</span><br></pre></td></tr></table></figure>
+<h3 id="文件权限"><a href="#文件权限" class="headerlink" title="文件权限"></a>文件权限</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">chmod u=rw file -c          修改文件file所有者权限为可读写并输出处理信息</span><br><span class="line">chmod u+x file              增加文件file所属者可执行权限</span><br><span class="line">chmod g+x file              增加file文件所属组可执行权限</span><br><span class="line">chmod a+x file              增加file文件所有用户可执行权限</span><br><span class="line">chmod u=rw file             修改文件file所属者权限为可读写</span><br><span class="line">chmod g+w -R dir/           增加dir目录以及子目录所有文件的所属组可写权限</span><br><span class="line">chmod 777 file1             修改文件file1所属者rwx权限、所属组rwx权限、其他用户rwx权限</span><br><span class="line">chown test file             修改file文件所属者为test</span><br><span class="line">chown -c test file          修改file文件所属者为test并显示更改信息</span><br><span class="line">chown -c :test file         修改file文件所属组为test并显示更改信息</span><br><span class="line">chown -c test:test file     修改file文件所属者、所属组为test并显示更改信息</span><br><span class="line">chown -c test: file         修改file文件所属者、所属组为test并显示更改信息</span><br><span class="line">chown -cR test: dir/        修改dir目录及其子目录所有文件所属者、所属组为test并显示更改信息 </span><br><span class="line">chgrp 组名 file1            修改文件所属组</span><br></pre></td></tr></table></figure>
+<h3 id="打包和压缩文件"><a href="#打包和压缩文件" class="headerlink" title="打包和压缩文件"></a>打包和压缩文件</h3><p>打包是指将一大堆文件或目录变成一个总的文件</p>
+<p>压缩是将一个大文件通过压缩算法变成一个小文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">unzip file.zip                      解压zip格式压缩包</span><br><span class="line">zip file.zip                        创建zip格式压缩包</span><br><span class="line">zip -r file1.zip file1 file2        把文件1和2一起压缩成zip格式压缩包</span><br><span class="line">unrar x file.rar                    解压rar包</span><br><span class="line">rar x file.rar                      解压rar包</span><br><span class="line">rar a file1.rar test_file           创建file1.rar包</span><br><span class="line">rar a file1.rar file1 file2         把1和2压缩为file1.rar</span><br><span class="line">gunzip file.gz                      解压gz包</span><br><span class="line">gzip file1                          压缩</span><br><span class="line">gzip -9 file1                       最大程度压缩</span><br><span class="line">bunzip2 file1.bz2                   解压bz2包</span><br><span class="line">bzip2 file1                         压缩</span><br><span class="line">tar -cvf file.tar file1             打包file1</span><br><span class="line">tar -cvf  file.tar file1 file2 dir  打包多个文件</span><br><span class="line">tar -tf file.tar                    显示包中内容</span><br><span class="line">tar -xvf file.tar                   解包</span><br><span class="line">tar -xvf file.tar -C /home          释放tar包到home目录</span><br><span class="line">tar -cvfj file.tar.bz2 dir1         创建tar.bz2格式压缩包</span><br><span class="line">tar -jxvf file.tar.bz2              解压tar.bz2格式压缩包</span><br><span class="line">tar -cvfz file.tar.gz dir1          创建tar.gz压缩包</span><br><span class="line">tar -zxvf file.tar.gz               解压tar.gz压缩包</span><br></pre></td></tr></table></figure>
+<h2 id="用户和群组"><a href="#用户和群组" class="headerlink" title="用户和群组"></a>用户和群组</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">whoami                              查看当前登录用户</span><br><span class="line">sudo                                以管理员权限执行</span><br><span class="line">su 用户名                           切换用户</span><br><span class="line">su                                  切换到root用户</span><br><span class="line">/etc/passwd文件                     包含所有用户名</span><br><span class="line">/etc/shadow文件                     用户对应密码</span><br><span class="line">/etc/group文件                      用户所有组</span><br><span class="line">useradd 用户名                      添加用户</span><br><span class="line">passwd 用户名                       修改密码</span><br><span class="line">userdel 用户名                      删除用户但不删除用户家目录</span><br><span class="line">userdel -r 用户名                   删除用户以及用户家目录</span><br><span class="line">userdel -f 用户名                   强制删除用户(即使用户已经登录)但不删除用户家目录</span><br><span class="line">usermod -l test -g root -d /home/test -s /bin/bash test1 修改</span><br><span class="line">useradd -u 1000 -g test -G root -d /home/test -s /bin/bash test 增加</span><br><span class="line">groups                              查看当前登录用户组内成员</span><br><span class="line">groups 用户名                       查看用户所在组及组内成员</span><br><span class="line">groupadd 组名                       创建新用户组</span><br><span class="line">groupdel 组名                       删除组</span><br><span class="line">groupmod -n 新组名 旧组名           重命名用户组</span><br></pre></td></tr></table></figure>
+<h2 id="软件包管理"><a href="#软件包管理" class="headerlink" title="软件包管理"></a>软件包管理</h2><h3 id="RPM包—redhat及类似系统"><a href="#RPM包—redhat及类似系统" class="headerlink" title="RPM包—redhat及类似系统"></a>RPM包—redhat及类似系统</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">rpm -hiv rpm包          安装</span><br><span class="line">rpm -e p</span><br></pre></td></tr></table></figure>
+<h3 id="YUM软件包—redhat及类似系统"><a href="#YUM软件包—redhat及类似系统" class="headerlink" title="YUM软件包—redhat及类似系统"></a>YUM软件包—redhat及类似系统</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">yum install             安装</span><br><span class="line">yum update              更新</span><br><span class="line">yum remove              删除</span><br><span class="line">yum list                列出当前系统中安装的所有包</span><br><span class="line">yum clean               清理rpm缓存删除下载的包</span><br></pre></td></tr></table></figure>
+<h3 id="DEB包—debian、ubuntu及类似系统"><a href="#DEB包—debian、ubuntu及类似系统" class="headerlink" title="DEB包—debian、ubuntu及类似系统"></a>DEB包—debian、ubuntu及类似系统</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">dpkg -i                 安装</span><br><span class="line">dpkg -r                 删除</span><br><span class="line">dpkg -l                 显示所有已安装的deb包</span><br></pre></td></tr></table></figure>
+<h3 id="APT软件工具—debian、ubuntu及类似系统"><a href="#APT软件工具—debian、ubuntu及类似系统" class="headerlink" title="APT软件工具—debian、ubuntu及类似系统"></a>APT软件工具—debian、ubuntu及类似系统</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">apt-get install         安装</span><br><span class="line">apt-cdrom install       从光盘安装</span><br><span class="line">apt-get update          更新索引，升级列表中的日软件包</span><br><span class="line">apt-get upgrade         升级所有已安装的软件</span><br><span class="line">apt-get remove          删除</span><br><span class="line">apt-get clean           从下载的软件包中清理缓存</span><br></pre></td></tr></table></figure>
+
+    </div>
+    
+    <div class="post-footer">
+        <div>
+            
+                转载声明：商业转载请联系作者获得授权,非商业转载请注明出处 © <a href target="_blank">littleStar</a>
+            
+        </div>
+        <div>
+            
+        </div>
+    </div>
+</article>
+
+<div class="article-nav prev-next-wrap clearfix">
+    
+        <a href="/2019/03/24/通过user-agent实现sql注入之翻译篇/" class="pre-post btn btn-default" title="通过user-agent实现sql注入之翻译篇">
+            <i class="fa fa-angle-left fa-fw"></i><span class="hidden-lg">上一篇</span>
+            <span class="hidden-xs">通过user-agent实现sql注入之翻译篇</span>
+        </a>
+    
+    
+        <a href="/2019/03/18/hexo_github/" class="next-post btn btn-default" title="利用hexo+github搭建博客">
+            <span class="hidden-lg">下一篇</span>
+            <span class="hidden-xs">利用hexo+github搭建博客</span><i class="fa fa-angle-right fa-fw"></i>
+        </a>
+    
+</div>
+
+
+    <div id="comments">
+        
+	
+    <div id="vcomments" class="valine"></div>
+    <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+<script src="/assets/valine.min.js"></script>
+
+    <script>
+        new Valine({
+            av: AV,
+            el: '#vcomments',
+            appId: 'xOKV9J4UeQAtVkvnJC7Kq2Jn-gzGzoHsz',
+            appKey: 'erIpQac4azoCmgfBB7Dl9maa',
+            placeholder: '说点什么吧',
+            notify: false,
+            verify: false,
+            avatar: 'mm',
+            meta: 'nick,mail'.split(','),
+            pageSize: '10',
+            path: window.location.pathname,
+            lang: 'zh-Hans'.toLowerCase()
+        })
+    </script>
+
+
+    </div>
+
+
+
+
+
+                </main>
+                
+                    <aside id="article-toc" role="navigation" class="col-md-4">
+    <div class="widget">
+        <h3 class="title">Table of Contents</h3>
+        
+            <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#系统信息"><span class="toc-text">系统信息</span></a></li></ol><li class="toc-item toc-level-2"><a class="toc-link" href="#网络"><span class="toc-text">网络</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#关机"><span class="toc-text">关机</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#文件及目录"><span class="toc-text">文件及目录</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#文件操作"><span class="toc-text">文件操作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#查看文件内容"><span class="toc-text">查看文件内容</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#文件搜索"><span class="toc-text">文件搜索</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#文件权限"><span class="toc-text">文件权限</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#打包和压缩文件"><span class="toc-text">打包和压缩文件</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#用户和群组"><span class="toc-text">用户和群组</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#软件包管理"><span class="toc-text">软件包管理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#RPM包—redhat及类似系统"><span class="toc-text">RPM包—redhat及类似系统</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#YUM软件包—redhat及类似系统"><span class="toc-text">YUM软件包—redhat及类似系统</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#DEB包—debian、ubuntu及类似系统"><span class="toc-text">DEB包—debian、ubuntu及类似系统</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#APT软件工具—debian、ubuntu及类似系统"><span class="toc-text">APT软件工具—debian、ubuntu及类似系统</span></a></li></ol>
+        
+    </li></div>
+</aside>
+
+                
+            </div>
+        </div>
+    </section>
+    <footer class="main-footer">
+    <div class="container">
+        <div class="row">
+        </div>
+    </div>
+</footer>
+
+<a id="back-to-top" class="icon-btn hide">
+	<i class="fa fa-chevron-up"></i>
+</a>
+
+
+
+
+    <div class="copyright">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="busuanzi">
+    
+</div>
+
+            </div>
+            <div class="col-sm-12">
+                <span>Copyright &copy; 2017
+                </span> |
+                <span>
+                    Powered by <a href="//hexo.io" class="copyright-links" target="_blank" rel="nofollow">Hexo</a>
+                </span> |
+                <span>
+                    Theme by <a href="//github.com/shenliyang/hexo-theme-snippet.git" class="copyright-links" target="_blank" rel="nofollow">Snippet</a>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+<script src="/js/app.js?rev=@@hash"></script>
+
+</body>
+</html>
